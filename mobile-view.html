@@ -13,11 +13,33 @@
             border-top: 1px solid #ccc;
         }
     </style>
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            var iframe = document.querySelector('#oldBrowser iframe');
+            var titleHere = document.querySelector('#titlehere');
+            
+            iframe.addEventListener('load', function() {
+                var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+                var iframeTitle = iframeDocument.title;
+                titleHere.textContent = iframeTitle;
+                
+                var intervalId = setInterval(function() {
+                    iframeTitle = iframeDocument.title;
+                    titleHere.textContent = iframeTitle;
+                    
+                    if (iframeTitle === 'Animation Complete') {
+                        clearInterval(intervalId);
+                    }
+                }, 300);
+            });
+        });
+    </script>
 </head>
 <body>
     <h1>Mobile View</h1>
-    <div id="titlehere"> iframe title here soon with animation-title</div>
-    <div id="oldBrowser">
+    <p> here below is the live title animation </p>
+    <div id="titlehere"></div>
+    <div id="oldBrowser" style="display: flex; justify-content: center; align-items: center;">
         <iframe src="index.html" frameborder="0"></iframe>
     </div>
 </body>
